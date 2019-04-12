@@ -19,8 +19,9 @@
     <script>
       let startTime,
         stopTime,
-        duration,
         timer = null;
+
+      let duration = 0;
 
       // function convertTime(timeInMilliseconds) {
       //   const seconds = Math.floor(timeInMilliseconds / 1000);
@@ -33,7 +34,7 @@
         function runningTime() {
           let time = new Date();
           document.getElementById("output").innerHTML =
-            (time - startTime) / 1000;
+            (duration + (time - startTime)) / 1000;
         }
 
         timer = setInterval(runningTime, 1);
@@ -41,7 +42,7 @@
 
       function stop() {
         stopTime = new Date();
-        duration = stopTime - startTime;
+        duration = duration + (stopTime - startTime);
         clearInterval(timer);
         document.getElementById("output").innerHTML = duration / 1000;
       }
