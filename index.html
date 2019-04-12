@@ -9,10 +9,11 @@
   </head>
   <body>
     <h1>Stopwatch Mk II</h1>
-    <div id="output">0.00</div>
+    <div id="output">0.000</div>
     <div></div>
     <button onClick="start()" id="start">Start</button><br />
-    <button onClick="stop()" id="stop">Stop</button>
+    <button onClick="stop()" id="stop">Stop</button><br />
+    <button onClick="reset()" id="reset">Reset</button>
     <div></div>
     <div></div>
     <div></div>
@@ -22,7 +23,6 @@
         timer = null;
 
       let duration = 0;
-
       let running = false;
 
       function start() {
@@ -49,8 +49,18 @@
         stopTime = new Date();
         duration = duration + (stopTime - startTime);
         clearInterval(timer);
-        document.getElementById("output").innerHTML = duration / 1000;
+        let showDuration = duration / 1000;
+        document.getElementById("output").innerHTML = showDuration.toFixed(3);
         running = false;
+      }
+
+      function reset() {
+        duration = 0;
+        startTime = 0;
+        stopTime = 0;
+        running = false;
+        document.getElementById("output").innerHTML = "0.000";
+        clearInterval(timer);
       }
     </script>
   </body>
