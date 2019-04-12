@@ -4,11 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Stopwatch Mk II</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <script></script>
+    <h1>Stopwatch Mk II</h1>
+    <div id="output">0.00</div>
+    <div></div>
+    <button onClick="start()" id="start">Start</button><br />
+    <button onClick="stop()" id="stop">Stop</button>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+      let startTime,
+        stopTime,
+        duration = null;
+
+      // function convertTime(timeInMilliseconds) {
+      //   const seconds = Math.floor(timeInMilliseconds / 1000);
+      //   const milliseconds = timeInMilliseconds % 60;
+      //   return `${seconds}.${milliseconds}`;
+      // }
+
+      function start() {
+        startTime = new Date();
+        console.log(startTime);
+        document.getElementById("output").innerHTML = "0.00";
+      }
+
+      function stop() {
+        stopTime = new Date();
+        duration = stopTime - startTime;
+        console.log(duration);
+        document.getElementById("output").innerHTML = duration / 1000;
+      }
+    </script>
   </body>
 </html>
