@@ -23,13 +23,13 @@
 
       let duration = 0;
 
-      // function convertTime(timeInMilliseconds) {
-      //   const seconds = Math.floor(timeInMilliseconds / 1000);
-      //   const milliseconds = timeInMilliseconds % 60;
-      //   return `${seconds}.${milliseconds}`;
-      // }
+      let running = false;
 
       function start() {
+        if (running) {
+          console.log("timer already started");
+          return;
+        }
         startTime = new Date();
         function runningTime() {
           let time = new Date();
@@ -38,13 +38,19 @@
         }
 
         timer = setInterval(runningTime, 1);
+        running = true;
       }
 
       function stop() {
+        if (!running) {
+          console.log("timer already stopped");
+          return;
+        }
         stopTime = new Date();
         duration = duration + (stopTime - startTime);
         clearInterval(timer);
         document.getElementById("output").innerHTML = duration / 1000;
+        running = false;
       }
     </script>
   </body>
