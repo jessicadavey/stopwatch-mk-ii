@@ -34,10 +34,10 @@
         if (running) {
           let lapStart = lapEnd || startTime; // sets lapStart to the end of the previous lap or the start time
           lapEnd = new Date();
-          let lapDuration = (lapEnd - lapStart) / 1000;
-          document.getElementById(
-            "lapList"
-          ).innerHTML += `<li>${lapDuration}</li>`;
+          let lapDuration = lapEnd - lapStart;
+          document.getElementById("lapList").innerHTML += `<li>${formatTime(
+            lapDuration
+          )}</li>`;
           return;
         }
 
@@ -74,6 +74,13 @@
         document.getElementById("output").innerHTML = "0.000";
         document.getElementById("lapList").innerHTML = "";
         clearInterval(timer);
+      }
+
+      function formatTime(timeInMilliseconds) {
+        let timeInSeconds = (timeInMilliseconds % 60000) / 1000;
+        let timeInMinutes = Math.floor(timeInMilliseconds / 60000);
+        if (timeInMinutes === 0) return `${timeInSeconds.toFixed(3)}`;
+        return `${timeInMinutes}:${timeInSeconds.toFixed(3)}`;
       }
     </script>
   </body>
