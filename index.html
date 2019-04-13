@@ -11,30 +11,41 @@
     <h1>Stopwatch Mk II</h1>
     <div id="output">0.000</div>
     <div></div>
-    <button onClick="start()" id="start">Start</button><br />
+    <button onClick="start()" id="start">Start - Lap</button><br />
     <button onClick="stop()" id="stop">Stop</button><br />
     <button onClick="reset()" id="reset">Reset</button>
-    <div></div>
+    <div>
+      <ul>
+        <span id="lapList"></span>
+      </ul>
+    </div>
     <div></div>
     <div></div>
     <script>
       let startTime,
         stopTime,
-        timer = null;
+        timer,
+        lapEnd = null;
 
-      let duration = 0;
+      let totalDuration = 0;
       let running = false;
 
       function start() {
         if (running) {
-          console.log("timer already started");
+          let lapStart = lapEnd || startTime; // sets lapStart to the end of the previous lap or the start time
+          lapEnd = new Date();
+          let lapDuration = (lapEnd - lapStart) / 1000;
+          document.getElementById(
+            "lapList"
+          ).innerHTML += `<li>${lapDuration}</li>`;
           return;
         }
+
         startTime = new Date();
         function runningTime() {
           let time = new Date();
           document.getElementById("output").innerHTML =
-            (duration + (time - startTime)) / 1000;
+            (totalDuration + (time - startTime)) / 1000;
         }
 
         timer = setInterval(runningTime, 1);
@@ -43,23 +54,25 @@
 
       function stop() {
         if (!running) {
-          console.log("timer already stopped");
           return;
         }
         stopTime = new Date();
-        duration = duration + (stopTime - startTime);
+        totalDuration = totalDuration + (stopTime - startTime);
         clearInterval(timer);
-        let showDuration = duration / 1000;
+        let showDuration = totalDuration / 1000;
         document.getElementById("output").innerHTML = showDuration.toFixed(3);
         running = false;
+        lapStart = 0;
       }
 
       function reset() {
-        duration = 0;
+        totalDuration = 0;
         startTime = 0;
         stopTime = 0;
         running = false;
+        lapEnd = null;
         document.getElementById("output").innerHTML = "0.000";
+        document.getElementById("lapList").innerHTML = "";
         clearInterval(timer);
       }
     </script>
